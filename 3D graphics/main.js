@@ -40,19 +40,40 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 const addStar = () => {
 	const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-	const material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
+	const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
 	const star = new THREE.Mesh(geometry, material);
 
-	const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+	const [x, y, z] = Array(3)
+		.fill()
+		.map(() => THREE.MathUtils.randFloatSpread(100));
 
 	star.position.set(x, y, z);
-	scene.add(star); 
-}
+	scene.add(star);
+};
 
 Array(200).fill().forEach(addStar);
 
-const spaceTexture = new THREE.TextureLoader().load('space2.jpeg');
+const spaceTexture = new THREE.TextureLoader().load("space2.jpeg");
 scene.background = spaceTexture;
+
+const spongebobTexture = new THREE.TextureLoader().load("spongebob.jpeg");
+
+const spongebob = new THREE.Mesh(
+	new THREE.BoxGeometry(3, 3, 3),
+	new THREE.MeshBasicMaterial({ map: spongebobTexture })
+);
+
+scene.add(spongebob);
+
+const moonTexture = new THREE.TextureLoader().load("moon.jpeg");
+const normalTexture = new THREE.TextureLoader().load("moon_normal.jpg");
+
+const moon = new THREE.Mesh(
+	new THREE.SphereGeometry(3, 32, 32),
+	new THREE.MeshBasicMaterial({ map: moonTexture, normalMap: normalTexture })
+);
+
+scene.add(moon);
 
 const animate = () => {
 	requestAnimationFrame(animate);
